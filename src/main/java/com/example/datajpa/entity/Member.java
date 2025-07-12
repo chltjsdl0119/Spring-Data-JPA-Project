@@ -8,6 +8,15 @@ import lombok.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "age"})
+// NamedEntityGraph 사용 방법
+@NamedEntityGraph(
+        name = "Member.all", attributeNodes = @NamedAttributeNode("team")
+)
+// NamedQuery 사용 방법
+@NamedQuery(
+        name="Member.findByUsername",
+        query="select m from Member m where m.username = :username"
+)
 public class Member {
 
     @Id
@@ -23,6 +32,11 @@ public class Member {
 
     public Member(String username) {
         this.username = username;
+    }
+
+    public Member(String username, int age) {
+        this.username = username;
+        this.age = age;
     }
 
     public Member(String username, int age, Team teamA) {
